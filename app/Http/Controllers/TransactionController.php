@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
+use App\Models\Client;
+use App\Models\Company;
 use App\Models\Transaction;
 
 class TransactionController extends Controller
@@ -15,7 +17,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        return Transaction::paginate();
     }
 
     /**
@@ -36,7 +38,48 @@ class TransactionController extends Controller
      */
     public function store(StoreTransactionRequest $request)
     {
-        //
+        $product = $request->product();
+        $buyer = $request->buyer();
+        $seller = $request->seller();
+        $amountToBuy = $request->input('amount');
+
+        $this->authorize('create', [
+            Transaction::class,
+            $product,
+            $amountToBuy,
+            $buyer,
+            $seller
+        ]);
+
+        if ($buyer::class === Company::class) {
+            $buyer->update([
+                'balance' => $buyer->balance - ($product->price * $amountToBuy)
+            ]);
+            $product->update([
+                'stock' => $product->stock + $amountToBuy
+            ]);
+        } else if ($buyer::class === Client::class) {
+            $product->update([
+                'stock' => $product->stock - $amountToBuy
+            ]);
+        } else {
+            return response('Unhandled case', 422);
+        }
+
+
+        Transaction::create([
+            'buyer_id' => $buyer->id,
+            'buyer_type' => $buyer::class,
+
+            'seller_id' => $seller->id,
+            'seller_type' => $seller::class,
+
+            'product_id' => $product->id,
+            'amount' => $amountToBuy,
+            'responsible' => $request->responsible()->id
+        ]);
+
+        return response()->noContent();
     }
 
     /**

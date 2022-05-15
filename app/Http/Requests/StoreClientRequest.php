@@ -13,7 +13,7 @@ class StoreClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user()->is_admin;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreClientRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:50',
+            'address' => 'required|string|max:255',
+            'country' => 'required|exists:countries,code'
         ];
     }
 }

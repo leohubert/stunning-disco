@@ -20,11 +20,11 @@ return new class extends Migration
             $table->id();
 
             $table->morphs('buyer');
+            $table->morphs('seller');
 
-            $table->integer('nb_products');
+            $table->integer('amount');
             $table->foreignIdFor(Product::class);
 
-            $table->foreignIdFor(Company::class);
             $table->foreignIdFor(Employee::class, 'responsible');
         });
     }

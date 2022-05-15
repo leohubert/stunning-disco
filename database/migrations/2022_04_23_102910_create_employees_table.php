@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\Country;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,6 +22,7 @@ return new class extends Migration
 
             $table->date('first_day');
 
+            $table->foreignIdFor(Company::class);
             $table->foreignIdFor(Country::class);
         });
     }
