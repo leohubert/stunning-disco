@@ -16,7 +16,7 @@ const props = defineProps({
 const form = useForm({
   name: props.client.name,
   address: props.client.address,
-  country_id: props.client.country_id,
+  country: props.client.country.code,
 });
 
 const submit = () => {
@@ -73,16 +73,16 @@ const submit = () => {
               <JetInputError :message="form.errors.address" class="mt-2" />
 
               <div class="mt-2">
-                <JetLabel for="country_id" value="Address" />
+                <JetLabel for="country_id" value="Country" />
                 <select
                     id="country_id"
-                    v-model="form.country_id"
+                    v-model="form.country"
                     type="text"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                     required
                     autofocus
                 >
-                  <option v-for="country in countries" :value="country.id" >{{country.name}}</option>
+                  <option v-for="country in countries" :value="country.code" >{{country.name}}</option>
                 </select>
               </div>
 

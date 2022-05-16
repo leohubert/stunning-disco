@@ -21,7 +21,7 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $clients = ClientResource::collection(Client::paginate());
+        $clients = ClientResource::collection(Client::orderBy('id')->paginate());
 
         if ($request->wantsJson()) {
             return $clients;
@@ -81,6 +81,8 @@ class ClientController extends Controller
     {
         $countries = Country::all();
 
+        $client->load('country');
+
         return inertia('Client/Edit', compact('client', 'countries'));
     }
 
@@ -113,6 +115,7 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  DeleteClientRequest  $request
      * @param  Client  $client
      * @return \Illuminate\Http\RedirectResponse|Response
      */

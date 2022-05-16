@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
-use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Client;
 use App\Models\Company;
 use App\Models\Transaction;
