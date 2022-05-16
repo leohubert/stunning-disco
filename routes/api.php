@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('transactions', TransactionController::class);
 
     // Countries
-    Route::get('countries', CountryController::class);
+    Route::get('countries', CountryController::class)->name('countries.index');
 
 
 });
