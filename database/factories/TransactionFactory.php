@@ -8,7 +8,6 @@ use App\Models\Employee;
 use App\Models\Product;
 use App\Models\Provider;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Transaction>

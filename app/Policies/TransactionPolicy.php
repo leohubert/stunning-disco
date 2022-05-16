@@ -15,7 +15,6 @@ class TransactionPolicy
 {
     use HandlesAuthorization;
 
-
     private function checkClientTransaction(
         Product $product,
         int $amountToBuy
