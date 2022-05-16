@@ -11,3 +11,9 @@ If you are running linux or mac, you can simply run :
 ```shell
 ./setup.sh
 ```
+
+
+To run unit tests, you can run this command:
+```shell
+./vendor/bin/sail test --coverage
+```

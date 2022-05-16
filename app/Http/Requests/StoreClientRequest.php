@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Country;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreClientRequest extends FormRequest
@@ -28,5 +29,10 @@ class StoreClientRequest extends FormRequest
             'address' => 'required|string|max:255',
             'country' => 'required|exists:countries,code'
         ];
+    }
+
+    public function country(): Country
+    {
+        return Country::whereCode($this->country)->first();
     }
 }

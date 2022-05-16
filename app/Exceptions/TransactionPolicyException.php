@@ -8,7 +8,7 @@ class TransactionPolicyException extends Exception
 {
     public static function cannotBuyFromHimself(): static
     {
-        return new static('Transaction prohibited, buyer and seller are the same.');
+        return new static('Transaction prohibited, buyer and seller cannot be the same.');
     }
 
     public static function clientCannotBuyToProvider(): static

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Country;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateClientRequest extends FormRequest
@@ -26,7 +27,12 @@ class UpdateClientRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'address' => ['required', 'string', 'min:3', 'max:255'],
-            'country_id' => ['required', 'exists:countries,id'],
+            'country' => ['required', 'exists:countries,code'],
         ];
+    }
+
+    public function country(): Country
+    {
+        return Country::whereCode($this->country)->first();
     }
 }

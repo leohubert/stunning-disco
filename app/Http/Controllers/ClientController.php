@@ -48,8 +48,7 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $countryCode = $request->safe()->only('country');
-        $country = Country::whereCode($countryCode)->first();
+        $country = $request->country();
 
         $client = Client::create(array_merge(
             $request->safe()->except('country'),
@@ -94,7 +93,15 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        $client->update($request->validated());
+
+        $country = $request->country();
+
+        $client->update(array_merge(
+            $request->safe()->except('country'),
+            [
+                'country_id' => $country->id,
+            ]
+        ));
 
         if ($request->wantsJson()) {
             return response()->noContent();
